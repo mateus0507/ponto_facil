@@ -951,6 +951,8 @@ h1 {
     color: #000000;
     letter-spacing: 1px;
     text-transform: uppercase;
+
+    text-align: center;
 }
 
 .register-form {
