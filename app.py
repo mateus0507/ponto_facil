@@ -60,6 +60,7 @@ def pg_login():
 @app.route("/pg_cadastro", methods=["GET", "POST"])
 def pg_cadastro():
     success = False
+    successSenha = False
     if request.method == "POST":
         
         nome = request.form["nome"]
@@ -68,6 +69,12 @@ def pg_cadastro():
         matricula = request.form["matricula"]
         jornada = request.form["jornada"]
         senha = request.form["senha"]
+        confirm_senha = request.form["confirm_senha"]
+
+        if senha != confirm_senha:
+            flash("As senhas não coincidem.", "error")
+            successSenha = True
+
 
         try:
             conn = conectar()
@@ -86,7 +93,7 @@ def pg_cadastro():
             flash("Email ou CPF já cadastrado.", "error")
             return redirect(url_for("pg_login"))
 
-    return render_template("pg_cadastro.html", success=success)
+    return render_template("pg_cadastro.html", success=success, successSenha=successSenha)
 
 
 @app.route("/pg_inicial")
