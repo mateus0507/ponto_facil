@@ -18,11 +18,28 @@ CREATE TABLE IF NOT EXISTS user_complemento (
     FOREIGN KEY (matricula) REFERENCES user(matricula)
 );
 
+-- Tabela de pontos (registro de entrada/saída)
 CREATE TABLE IF NOT EXISTS pontos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    matricula TEXT,
-    data DATE,
-    hora TEXT,
-    tipo TEXT, -- "entrada", "saida", "intervalo_inicio", "intervalo_fim"
-    FOREIGN KEY(matricula) REFERENCES user(matricula)
+    colaborador_id INTEGER NOT NULL,
+    data_ponto DATE NOT NULL,
+    hora_entrada TIME,
+    hora_saida_almoco TIME,
+    hora_retorno_almoco TIME,
+    hora_saida TIME,
+    horas_trabalhadas DECIMAL(4,2),
+    observacoes TEXT,
+    data_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (colaborador_id) REFERENCES colaboradores(id)
+);
+
+CREATE TABLE IF NOT EXISTS suporte (
+    idSuporte INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL,
+    matricula TEXT NOT NULL,
+    email TEXT NOT NULL,
+    assunto TEXT NOT NULL,
+    descricao TEXT NOT NULL,
+    data_solicitacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (matricula) REFERENCES user(matricula)
 );
