@@ -189,9 +189,28 @@ def marcar_ponto(matricula, tipo_ponto):
     finally:
         conn.close()
 
-@app.route("/pg_lembrete")
+@app.route("/pg_lembrete", methods=["GET", "POST"])
 def pg_lembrete():
-    return render_template("pg_lembrete.html")
+    if request.method == "POST":
+        nome = request.form.get("name")
+        data = request.form.get("data")
+        hora = request.form.get("hora")
+
+        if nome and data and hora:
+            conn = sqlite3.connect("banco.db")
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO lembretes (name, data, hora) VALUES (?, ?, ?)", (nome, data, hora))
+            conn.commit()
+            conn.close()
+            return redirect(url_for("pg_lembrete"))
+
+    # Recupera lembretes do banco para JS
+    conn = sqlite3.connect("banco.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT name, data, hora FROM lembretes")
+    lembretes = cursor.fetchall()
+    conn.close()
+    return render_template("pg_lembrete.html", lembretes=lembretes)
 
 @app.route("/pg_justificativa")
 def pg_justificativa():
@@ -241,7 +260,7 @@ def pg_dados_pessoais():
     dados = cursor.fetchone()
     cursor.close()
     conn.close()
-
+    
     return render_template("pg_dados_pessoais.html", dados=dados)   
 
 # Página de Suporte

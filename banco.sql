@@ -18,7 +18,18 @@ CREATE TABLE IF NOT EXISTS user_complemento (
     FOREIGN KEY (matricula) REFERENCES user(matricula)
 );
 
+<<<<<<< HEAD
 -- Tabela de pontos (registro de entrada/saída)
+=======
+CREATE TABLE IF NOT EXISTS lembretes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    data TEXT NOT NULL,
+    hora TEXT NOT NULL
+);
+
+
+>>>>>>> b757c9651c17fddf1b7c3308fd9956efda7fa9f5
 CREATE TABLE IF NOT EXISTS pontos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     colaborador_id INTEGER NOT NULL,
