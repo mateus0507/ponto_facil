@@ -22,24 +22,30 @@
   <p>Selecione um dia para adicionar um lembrete de bater o ponto.</p>
 
 
-  <form>
+  <form action="{{ url_for('pg_lembrete') }}" method="POST">
     <div>
       <label for="name">Nome do Lembrete</label>
       <input type="text" id="name" name="name" required>
     </div>
     <div>
       <label for="data">Escolha a data:</label>
-      <input type="date" id="data" name="data" min="2025-01-01" max="2025-12-31">
-
-
+      <input type="date" id="data" name="data" min="2025-01-01" max="2025-12-31" required>
     </div>
     <div>
       <label for="hora">Escolha o horário:</label>
       <input type="time" id="hora" name="hora" required>
     </div>
     <button class="button" type="submit">Salvar Lembrete</button>
-  </form>
+</form>
+
+<audio id="alarme" src="{{ url_for('static', filename='audio/alarme.mp3') }}" preload="auto"></audio>
+
+<script src="{{ url_for('static', filename='pg_lembrete.js') }}" defer></script>
+
+<div id="custom-alert" class="alert-box" style="display: none;">
+    <p id="alert-message"></p>
+    <button id="alert-ok">OK</button>
+</div>
 
 </body>
 </html>
-

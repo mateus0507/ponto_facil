@@ -1,8 +1,8 @@
-
-from datetime import datetime, timedelta
+from unittest import result
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 import sqlite3
 import os
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 app.secret_key = "sua_chave_secreta"  # Necessário para flash e sessão
@@ -93,7 +93,7 @@ def pg_cadastro():
             flash("Email ou CPF já cadastrado.", "error")
             return redirect(url_for("pg_login"))
 
-    return render_template("pg_cadastro.html", success=success, successSenha=successSenha)
+    return render_template("pg_cadastro.html", success=success)
 
 
 @app.route("/pg_inicial")
@@ -104,10 +104,26 @@ def pg_inicial():
 def pg_senha():
     return render_template("pg_senha.html")
 
-@app.route("/pg_mrc_ponto", methods=["GET", "POST"])
+
+@app.route("/marcar_ponto", methods=["POST"])
+def marcar_ponto():
+
+    matricula = session.get("matricula")
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    conn = conectar()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM user  WHERE matricula=? AND data_ponto = ?",(matricula,today))
+
+    return render_template("pg_mrc_ponto.html")
+
+
+
 @app.route("/pg_mrc_ponto", methods=["GET", "POST"])
 def pg_mrc_ponto():
     matricula = session.get("matricula")
+    print("Matricula da sessão:", matricula)  # DEBUG
+
     if not matricula:
         return redirect(url_for("pg_login"))
 
@@ -115,103 +131,86 @@ def pg_mrc_ponto():
     cursor = conn.cursor()
     cursor.execute("SELECT nome, jornada FROM user WHERE matricula = ?", (matricula,))
     usuario = cursor.fetchone()
+    print("Resultado do SELECT:", usuario)  # DEBUG
     conn.close()
+    if usuario:
+        nome, jornada = usuario
+        if jornada == "horista":
+            mensagem = "Sua jornada de trabalho é de um horista."
+        elif jornada == "mensalista":
+            mensagem = "Sua jornada de trabalho é de um mensalista."
+        else:
+            mensagem = "Sua jornada de trabalho não foi definida."
+    else:
+        mensagem = "Usuário não encontrado."
+        nome = "Desconhecido"
 
-    if not usuario:
-        flash("Usuário não encontrado.", "error")
+    return render_template("pg_mrc_ponto.html", nome=nome, mensagem=mensagem)
+
+#marcação de ponto 
+def marcar_ponto(matricula, tipo_ponto):
+    if "usuario" not in session:
+        flash("Você precisa estar logado para marcar o ponto.", "error")
         return redirect(url_for("pg_login"))
-
-    nome, jornada = usuario
-    agora = datetime.now()
-
-    conn = conectar()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM pontos WHERE matricula = ? AND data = ? ORDER BY id",
-                   (matricula, agora.date()))
-    pontos_hoje = cursor.fetchall()
-
-    if request.method == "POST":
-        if jornada.lower() == "horista":
-            # Contar horas trabalhadas hoje
-            entradas = [p for p in pontos_hoje if p[4] == "entrada"]
-            saidas = [p for p in pontos_hoje if p[4] == "saida"]
-
-            horas_total = 0
-            for e, s in zip(entradas, saidas):
-                h1 = datetime.strptime(e[3], "%H:%M")
-                h2 = datetime.strptime(s[3], "%H:%M")
-                horas_total += (h2 - h1).seconds / 3600
-
-            if len(entradas) > len(saidas):
-                # precisa registrar saída
-                if horas_total >= 10:
-                    flash("Horista já atingiu 10h hoje!", "error")
-                else:
-                    cursor.execute("INSERT INTO pontos (matricula, data, hora, tipo) VALUES (?, ?, ?, ?)",
-                                   (matricula, agora.date(), agora.strftime("%H:%M"), "saida"))
-                    conn.commit()
-                    flash("Saída registrada!", "success")
+    try:
+        conn = conectar()
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT *
+            FROM user
+            WHERE matricula = ? AND tipo_ponto = ?
+        """, (matricula, tipo_ponto))
+        
+        usuario = cursor.fetchone()
+    
+        if usuario:
+            if tipo_ponto == "Horista":
+                
+                # Aqui você cria as regras de jornada do horista
+                regras = {
+                    "max_horas_dia": 10,
+                    "max_horas_semana": 44
+                    
+                }
+            elif tipo_ponto == "Mensalista":
+                # Aqui você cria as regras de jornada do mensalista
+                regras = {
+                    "max_horas_dia": 8,   # exemplo
+                    "max_horas_semana": 44,
+                    "max_horas_extras": 50   # exemplo
+                }
             else:
-                if horas_total >= 10:
-                    flash("Horista não pode iniciar novo expediente hoje.", "error")
-                else:
-                    cursor.execute("INSERT INTO pontos (matricula, data, hora, tipo) VALUES (?, ?, ?, ?)",
-                                   (matricula, agora.date(), agora.strftime("%H:%M"), "entrada"))
-                    conn.commit()
-                    flash("Entrada registrada!", "success")
+                regras = {}
+        else:
+            regras = {}
 
-        elif jornada.lower() == "mensalista":
-            ultimo = pontos_hoje[-1] if pontos_hoje else None
+    except Exception as e:
+        regras = {}
+    finally:
+        conn.close()
 
-            # Calcular total trabalhado até agora
-            entradas = [p for p in pontos_hoje if p[4] == "entrada"]
-            saidas = [p for p in pontos_hoje if p[4] == "saida"]
-            horas_total = 0
-            for e, s in zip(entradas, saidas):
-                h1 = datetime.strptime(e[3], "%H:%M")
-                h2 = datetime.strptime(s[3], "%H:%M")
-                horas_total += (h2 - h1).seconds / 3600
-
-            if not ultimo:
-                # primeira batida → entrada
-                cursor.execute("INSERT INTO pontos (matricula, data, hora, tipo) VALUES (?, ?, ?, ?)",
-                               (matricula, agora.date(), agora.strftime("%H:%M"), "entrada"))
-                conn.commit()
-                flash("Entrada registrada!", "success")
-
-            elif ultimo[4] == "entrada":
-                cursor.execute("INSERT INTO pontos (matricula, data, hora, tipo) VALUES (?, ?, ?, ?)",
-                               (matricula, agora.date(), agora.strftime("%H:%M"), "intervalo_inicio"))
-                conn.commit()
-                flash("Início do intervalo registrado!", "success")
-
-            elif ultimo[4] == "intervalo_inicio":
-                cursor.execute("INSERT INTO pontos (matricula, data, hora, tipo) VALUES (?, ?, ?, ?)",
-                               (matricula, agora.date(), agora.strftime("%H:%M"), "intervalo_fim"))
-                conn.commit()
-                flash("Fim do intervalo registrado!", "success")
-
-            elif ultimo[4] in ["intervalo_fim", "saida"]:
-                if horas_total >= 10:  # 8h regulares + 2h extras
-                    flash("Mensalista não pode ultrapassar 2h extras (10h no total).", "error")
-                else:
-                    cursor.execute("INSERT INTO pontos (matricula, data, hora, tipo) VALUES (?, ?, ?, ?)",
-                                   (matricula, agora.date(), agora.strftime("%H:%M"), "saida"))
-                    conn.commit()
-                    flash("Saída registrada!", "success")
-
-    # Buscar novamente para exibir atualizado
-    cursor.execute("SELECT * FROM pontos WHERE matricula = ? AND data = ? ORDER BY id",
-                   (matricula, agora.date()))
-    pontos_hoje = cursor.fetchall()
-    conn.close()
-
-    return render_template("pg_mrc_ponto.html", nome=nome, jornada=jornada, pontos=pontos_hoje)
-
-
-@app.route("/pg_lembrete")
+@app.route("/pg_lembrete", methods=["GET", "POST"])
 def pg_lembrete():
-    return render_template("pg_lembrete.html")
+    if request.method == "POST":
+        nome = request.form.get("name")
+        data = request.form.get("data")
+        hora = request.form.get("hora")
+
+        if nome and data and hora:
+            conn = sqlite3.connect("banco.db")
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO lembretes (name, data, hora) VALUES (?, ?, ?)", (nome, data, hora))
+            conn.commit()
+            conn.close()
+            return redirect(url_for("pg_lembrete"))
+
+    # Recupera lembretes do banco para JS
+    conn = sqlite3.connect("banco.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT name, data, hora FROM lembretes")
+    lembretes = cursor.fetchall()
+    conn.close()
+    return render_template("pg_lembrete.html", lembretes=lembretes)
 
 @app.route("/pg_justificativa")
 def pg_justificativa():
@@ -261,56 +260,39 @@ def pg_dados_pessoais():
     dados = cursor.fetchone()
     cursor.close()
     conn.close()
-
+    
     return render_template("pg_dados_pessoais.html", dados=dados)   
 
-@app.route("/pg_suporte")
+# Página de Suporte
+@app.route("/pg_suporte", methods=["GET", "POST"])
 def pg_suporte():
+    matricula = session.get("matricula")
+
+    if request.method == "POST":
+        nome = request.form.get("nome")
+        matricula = request.form.get("matricula")
+        email = request.form.get("email")
+        assunto = request.form.get("assunto")
+        descricao = request.form.get("descricao")
+
+        try:
+            conn = conectar()
+            cursor = conn.cursor()
+            cursor.execute("""
+                INSERT INTO suporte (nome, matricula, email, assunto, descricao)
+                VALUES (?, ?, ?, ?, ?)
+            """, (nome, matricula, email, assunto, descricao))
+            conn.commit()
+            conn.close()
+
+            flash("Solicitação de suporte enviada com sucesso!", "success")
+            return redirect(url_for("pg_suporte"))
+
+        except sqlite3.Error as e:
+            flash(f"Erro ao enviar suporte: {str(e)}", "error")
+            return redirect(url_for("pg_suporte"))
+
     return render_template("pg_suporte.html")
-
-#marcação de ponto 
-
-def marcar_ponto(matricula, tipo_ponto):
-    try:
-        conn = conectar()
-        cursor = conn.cursor()
-        cursor.execute("""
-            SELECT *
-            FROM user
-            WHERE matricula = ? AND tipo_ponto = ?
-        """, (matricula, tipo_ponto))
-        
-        usuario = cursor.fetchone()
-    
-        if usuario:
-            if tipo_ponto == "Horista":
-                
-                # Aqui você cria as regras de jornada do horista
-                regras = {
-                    "max_horas_dia": 10,
-                    "max_horas_semana": 44
-                    
-                }
-            elif tipo_ponto == "Mensalista":
-                # Aqui você cria as regras de jornada do mensalista
-                regras = {
-                    "max_horas_dia": 8,   # exemplo
-                    "max_horas_semana": 44,
-                    "max_horas_extras": 50   # exemplo
-                }
-            else:
-                regras = {}
-        else:
-            regras = {}
-
-    except Exception as e:
-        regras = {}
-    finally:
-        conn.close()
-
-
-        
-
 
 
 
