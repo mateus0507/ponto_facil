@@ -18,8 +18,33 @@
         <a class="link" href="{{ url_for('pg_suporte') }}"><img class="icon" src="{{ url_for('static', filename='images/suporte.png') }}" alt="">Suporte</a>
     </header>
     <main class="main_ponto">
-        <h1>Olá, {{ nome }}!</h1>
-        <h2>{{ mensagem }}</h2>
+        <div class="ponto-container">
+    <h2 class="ponto-title">Bem-vindo, {{ nome }}</h2>
+    <p class="ponto-subtitle">Jornada: <span class="badge jornada">{{ jornada }}</span></p>
+
+    <h3 class="ponto-section">Pontos de hoje:</h3>
+    <ul class="ponto-list">
+        {% for p in pontos %}
+            <li>{{ p[3] }} - {{ p[4] }}</li>
+        {% else %}
+            <li class="empty">Nenhum ponto registrado hoje.</li>
+        {% endfor %}
+    </ul>
+
+    <form method="POST" class="ponto-form">
+        <button type="submit" class="btn-ponto">Bater Ponto</button>
+    </form>
+
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, msg in messages %}
+                    <span class="badge {{ category }}">{{ msg }}</span><br>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+</div>
     </main>
 </body>
 </html>

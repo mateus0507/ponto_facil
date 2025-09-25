@@ -25,3 +25,12 @@ CREATE TABLE IF NOT EXISTS lembretes (
     hora TEXT NOT NULL
 );
 
+
+CREATE TABLE IF NOT EXISTS pontos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    matricula TEXT,
+    data DATE,
+    hora TEXT,
+    tipo TEXT, -- "entrada", "saida", "intervalo_inicio", "intervalo_fim"
+    FOREIGN KEY(matricula) REFERENCES user(matricula)
+);
