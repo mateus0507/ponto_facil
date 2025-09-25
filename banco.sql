@@ -26,16 +26,11 @@ CREATE TABLE IF NOT EXISTS lembretes (
 );
 CREATE TABLE IF NOT EXISTS pontos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    colaborador_id INTEGER NOT NULL,
-    data_ponto DATE NOT NULL,
-    hora_entrada TIME,
-    hora_saida_almoco TIME,
-    hora_retorno_almoco TIME,
-    hora_saida TIME,
-    horas_trabalhadas DECIMAL(4,2),
-    observacoes TEXT,
-    data_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (colaborador_id) REFERENCES colaboradores(id)
+    matricula TEXT,
+    data DATE,
+    hora TEXT,
+    tipo TEXT, -- "entrada", "saida", "intervalo_inicio", "intervalo_fim"
+    FOREIGN KEY(matricula) REFERENCES user(matricula)
 );
 
 CREATE TABLE IF NOT EXISTS suporte (
