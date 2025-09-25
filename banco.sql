@@ -17,3 +17,11 @@ CREATE TABLE IF NOT EXISTS user_complemento (
     nascimento DATE,
     FOREIGN KEY (matricula) REFERENCES user(matricula)
 );
+
+CREATE TABLE IF NOT EXISTS lembretes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    data TEXT NOT NULL,
+    hora TEXT NOT NULL
+);
+
