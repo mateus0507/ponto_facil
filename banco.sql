@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS user_complemento (
     telefone TEXT,
     endereco TEXT,
     nascimento DATE,
+    genero TEXT,
     FOREIGN KEY (matricula) REFERENCES user(matricula)
 );
 
@@ -43,3 +44,4 @@ CREATE TABLE IF NOT EXISTS suporte (
     data_solicitacao DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (matricula) REFERENCES user(matricula)
 );
+

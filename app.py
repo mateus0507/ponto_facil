@@ -248,7 +248,9 @@ def pg_dados_pessoais():
     if request.method == "POST":
         telefone = request.form.get("telefone")
         endereco = request.form.get("endereco")
-        nascimento = request.form.get("nascimento")  # formato: YYYY-MM-DD
+        nascimento = request.form.get("nascimento")
+        genero = request.form.get("genero")
+        
 
         conn = conectar()
         cursor = conn.cursor()
