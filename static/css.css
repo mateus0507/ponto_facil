@@ -17,17 +17,9 @@ body {
 }
 
 .main_ponto {
-  margin-top: 15px;  /* espaço entre a header e o main */
-    padding: 15px;
+    margin-top: 0px;  /* espaço entre a header e o main */
+    padding: 0px;
     
-}
-
-main {
-    display: flex;
-    margin: 200px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
 .logo {
