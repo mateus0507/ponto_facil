@@ -236,54 +236,50 @@ def pg_lembrete():
 def pg_justificativa():
     return render_template("pg_justificativa.html")
 
+
+    
 @app.route("/pg_dados_pessoais", methods=["GET", "POST"])
 def pg_dados_pessoais():
-
     matricula = session.get("matricula")
-
     if not matricula:
         return redirect(url_for("pg_login"))
 
+    conn = conectar()
+    cursor = conn.cursor()
+
+    # Verifica se já tem dados
+    cursor.execute("SELECT telefone, endereco, nascimento, genero FROM user_complemento WHERE matricula = ?", (matricula,))
+    dados = cursor.fetchone()
 
     if request.method == "POST":
         telefone = request.form.get("telefone")
         endereco = request.form.get("endereco")
         nascimento = request.form.get("nascimento")
         genero = request.form.get("genero")
-        
 
-        conn = conectar()
-        cursor = conn.cursor()
-
-        cursor.execute("SELECT 1 FROM user_complemento WHERE matricula = ?", (matricula,))
-        existe = cursor.fetchone()
-
-        if existe:
+        if dados:  # Já existe → Atualizar
             cursor.execute("""
                 UPDATE user_complemento
-                SET telefone = ?, endereco = ?, nascimento = ?
+                SET telefone = ?, endereco = ?, nascimento = ?, genero = ?
                 WHERE matricula = ?
-            """, (telefone, endereco, nascimento, matricula))
-            return redirect(url_for("pg_inicial"))
-        else:
+            """, (telefone, endereco, nascimento, genero, matricula))
+            flash("Dados atualizados com sucesso!", "success")
+        else:  # Não existe → Inserir
             cursor.execute("""
-                INSERT INTO user_complemento (matricula, telefone, endereco, nascimento)
-                VALUES (?, ?, ?, ?)
-            """, (matricula, telefone, endereco, nascimento))
+                INSERT INTO user_complemento (matricula, telefone, endereco, nascimento, genero)
+                VALUES (?, ?, ?, ?, ?)
+            """, (matricula, telefone, endereco, nascimento, genero))
+            flash("Dados cadastrados com sucesso!", "success")
 
         conn.commit()
         cursor.close()
         conn.close()
+        return redirect(url_for("pg_dados_pessoais"))  # volta para mostrar atualizado
 
-    # Para exibir dados atuais no formulário
-    conn = conectar()
-    cursor = conn.cursor()
-    cursor.execute("SELECT telefone, endereco, nascimento FROM user_complemento WHERE matricula = ?", (matricula,))
-    dados = cursor.fetchone()
     cursor.close()
     conn.close()
-    
-    return render_template("pg_dados_pessoais.html", dados=dados)   
+
+    return render_template("pg_dados_pessoais.html", dados=dados)
 
 # Página de Suporte
 @app.route("/pg_suporte", methods=["GET", "POST"])

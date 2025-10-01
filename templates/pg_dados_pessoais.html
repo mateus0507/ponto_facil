@@ -19,38 +19,39 @@
     </header>
     <br>
     <br>
-    <br>
-    <br>
+
     
 
-    <h2 class="title_pessoais">Complemento de <br>Dados Pessoais</h2>
+    <h1>Complemento de <br>Dados Pessoais</h1>
     <br>
     <br>
     <br>
 
     <form class="register-form" id="registerForm" action="{{ url_for('pg_dados_pessoais') }}" method="POST">
-        <div class="form-row2">
-          
-            <div class="form-group">
-                <label for="telefone">Telefone</label>
-                <input type="text" id="telefone" name="telefone" required>
-                
-                <label for="endereco">Endereço</label>
-                <input type="text" id="endereco" name="endereco" required>
-      
-                <label for="nascimento">Data de Nascimento</label>
-                <input type="date" id="nascimento" name="nascimento" required>
-                
-                <label for="genero">Gênero</label>
-                <select id="genero" name="genero" required>
-                    <option value="masculino">Masculino</option>
-                    <option value="feminino">Feminino</option>
-                    <option value="outro">Outro</option>
-                </select>
+    <div class="form-row2">
+        <div class="form-group">
+            <label for="telefone">Telefone</label>
+            <input type="text" id="telefone" name="telefone" value="{{ dados[0] if dados else '' }}" required>
+            
+            <label for="endereco">Endereço</label>
+            <input type="text" id="endereco" name="endereco" value="{{ dados[1] if dados else '' }}" required>
+  
+            <label for="nascimento">Data de Nascimento</label>
+            <input type="date" id="nascimento" name="nascimento" value="{{ dados[2] if dados else '' }}" required>
+            
+            <label for="genero">Gênero</label>
+            <select id="genero" name="genero" required>
+                <option value="masculino" {% if dados and dados[3] == 'masculino' %}selected{% endif %}>Masculino</option>
+                <option value="feminino" {% if dados and dados[3] == 'feminino' %}selected{% endif %}>Feminino</option>
+                <option value="outro" {% if dados and dados[3] == 'outro' %}selected{% endif %}>Outro</option>
+            </select>
 
-                <button type="submit" class="login-btn">Cadastrar Colaborador</button>
-            </div>  
-        </div>
-    </form>
+            <button type="submit" class="login-btn">
+                {% if dados %} Atualizar Dados {% else %} Cadastrar Colaborador {% endif %}
+            </button>
+        </div>  
+    </div>
+</form>
+
 </body>
 </html>
