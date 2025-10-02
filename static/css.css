@@ -336,6 +336,19 @@ h1 {
   font-size: 12px;
 }
 
+body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+  .mensagem { color: green; font-weight: bold; margin: 20px; }
+  form { margin-top: 20px; }
+  input, textarea { width: 230px; padding: 10px; margin: 10px; }
+  button {
+    background-color: blue;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
 
 /* fim das pg lembrete/justificativa*/
 
@@ -1274,3 +1287,4 @@ h1 {
     cursor: pointer;
     border-radius: 5px;
 }
+

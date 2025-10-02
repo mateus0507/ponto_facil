@@ -45,3 +45,9 @@ CREATE TABLE IF NOT EXISTS suporte (
     FOREIGN KEY (matricula) REFERENCES user(matricula)
 );
 
+CREATE TABLE IF NOT EXISTS justificativas (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL,
+    data DATE NOT NULL,
+    motivo TEXT NOT NULL
+);

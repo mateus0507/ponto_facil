@@ -6,6 +6,7 @@
     <title>Ponto Fácil</title>
     <link rel="icon" href="{{ url_for('static', filename='images/Captura_de_tela_2025-08-21_194917-removebg-preview (1).png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css.css') }}">
+    <script src="{{ url_for('static', filename='pg_justificativa.js') }}"></script>
 </head>
 <body>
     <header>
@@ -19,24 +20,30 @@
     </header>
     <h1>Justificativa</h1>
     <p>Quando esquecer de bater ponto lembre-se de se justificar</p>
-         
+       
+    <!-- Mensagem do Flask -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="mensagem">{{ messages[0] }}</div>
+        {% endif %}
+    {% endwith %}
 
-    <form action="form-justificativa" method="post">
-        <label for="Nome">Nome do Funcionário</label>
-        <input type="text" id="Nome" name="Nome" required>
+    <form action="pg_justificativa" method="post">
+        <label for="nome">Nome do Funcionário</label>
+        <input type="text" id="nome" name="nome" required>
 
 
-        <label for="Data">Data do ponto não registrado:</label>
+        <label for="data">Data do ponto não registrado:</label>
         <input type="date" id="data" name="data" min="2025-01-01" max="2025-12-31">
 
 
-        <label for="Motivo">Motivo:</label>
-        <textarea id="Motivo" name="Motivo" rows="4" required></textarea>
+        <label for="motivo">Motivo:</label>
+        <textarea id="motivo" name="motivo" rows="4" required></textarea>
 
 
         <button class="button" type="submit">Enviar Justificativa</button>
     </form>
-
+ 
 </body>      
 </html>
 

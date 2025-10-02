@@ -232,8 +232,22 @@ def pg_lembrete():
     conn.close()
     return render_template("pg_lembrete.html", lembretes=lembretes)
 
-@app.route("/pg_justificativa")
+@app.route("/pg_justificativa", methods=["GET", "POST"])
 def pg_justificativa():
+    if request.method == "POST":
+        nome = request.form["nome"]
+        data = request.form["data"]
+        motivo = request.form["motivo"]
+
+        conn = sqlite3.connect("banco.db")
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO justificativas (nome, data, motivo) VALUES (?, ?, ?)",
+                       (nome, data, motivo))
+        conn.commit()
+        conn.close()
+        
+        flash("✅ Sua justificativa foi enviada com sucesso!")
+        return redirect(url_for("pg_justificativa"))
     return render_template("pg_justificativa.html")
 
 
