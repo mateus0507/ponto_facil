@@ -44,15 +44,13 @@ def pg_login():
         
 
         if usuario:
-            session["matricula"] = usuario[4]  # Armazena o id do usuário na sessão
-            print("Usuário autenticado:", usuario)
-            print("Email do usuário:", session["matricula"])
+            session["matricula"] = usuario[4]  # pega a matrícula correta
+            session["nome"] = usuario[0]       # salva também o nome para usar nas páginas
             flash("Login realizado com sucesso!", "success")
             return redirect(url_for("pg_inicial"))
         else:
             flash("Email ou senha incorretos.", "error")
             return redirect(url_for("pg_login"))
-        
 
     return render_template('pg_login.html')
 
