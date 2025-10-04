@@ -298,9 +298,6 @@ h1 {
     font-weight: bold;
   }
  
-  a:hover {
-    text-decoration: underline;
-  }
 
 
   div{
@@ -1287,4 +1284,3 @@ body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
     cursor: pointer;
     border-radius: 5px;
 }
-
