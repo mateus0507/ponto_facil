@@ -44,13 +44,15 @@ def pg_login():
         
 
         if usuario:
-            session["matricula"] = usuario[4]  # pega a matrícula correta
-            session["nome"] = usuario[0]       # salva também o nome para usar nas páginas
+            session["matricula"] = usuario[4]  # Armazena o id do usuário na sessão
+            print("Usuário autenticado:", usuario)
+            print("Email do usuário:", session["matricula"])
             flash("Login realizado com sucesso!", "success")
             return redirect(url_for("pg_inicial"))
         else:
             flash("Email ou senha incorretos.", "error")
             return redirect(url_for("pg_login"))
+        
 
     return render_template('pg_login.html')
 
@@ -296,8 +298,22 @@ def pg_lembrete():
     conn.close()
     return render_template("pg_lembrete.html", lembretes=lembretes)
 
-@app.route("/pg_justificativa")
+@app.route("/pg_justificativa", methods=["GET", "POST"])
 def pg_justificativa():
+    if request.method == "POST":
+        nome = request.form["nome"]
+        data = request.form["data"]
+        motivo = request.form["motivo"]
+
+        conn = sqlite3.connect("banco.db")
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO justificativas (nome, data, motivo) VALUES (?, ?, ?)",
+                       (nome, data, motivo))
+        conn.commit()
+        conn.close()
+        
+        flash("✅ Sua justificativa foi enviada com sucesso!")
+        return redirect(url_for("pg_justificativa"))
     return render_template("pg_justificativa.html")
 
 

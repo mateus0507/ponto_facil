@@ -333,6 +333,19 @@ h1 {
   font-size: 12px;
 }
 
+body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+  .mensagem { color: green; font-weight: bold; margin: 20px; }
+  form { margin-top: 20px; }
+  input, textarea { width: 230px; padding: 10px; margin: 10px; }
+  button {
+    background-color: blue;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
 
 /* fim das pg lembrete/justificativa*/
 
@@ -1271,26 +1284,3 @@ h1 {
     cursor: pointer;
     border-radius: 5px;
 }
-
-
-.btn-pontos_mensais {
-  text-decoration: none;
-  background: linear-gradient(90deg, #ffffff, #ffffff); /* degrade */
-  color: rgb(0, 0, 0); /* texto branco */
-  font-weight: bold;
-  
-  border-radius: 10px; /* bordas arredondadas */
-  padding: 12px 30px; /* altura e largura interna */
- 
-  font-size: 16px;
-  letter-spacing: 1px; /* espaço entre letras */
-  transition: transform 0.2s ease, opacity 0.2s ease;
-  text-transform: uppercase; /* deixa o texto em maiúsculo */
-  margin-left: 10px;
-}
-
-.btn-pontos_mensais:hover {
-    transform: scale(1.05); /* aumenta levemente */
-    opacity: 0.9;
-}
-
