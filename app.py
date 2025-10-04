@@ -207,6 +207,72 @@ def pg_mrc_ponto():
     return render_template("pg_mrc_ponto.html", nome=nome, jornada=jornada, pontos=pontos_hoje)
 
 
+@app.route("/pg_pontos_mensais")
+def pg_pontos_mensais():
+    matricula = session.get("matricula")
+    if not matricula:
+        return redirect(url_for("pg_login"))
+
+    conn = conectar()
+    cursor = conn.cursor()
+
+    # Pegar meses que têm pontos para este usuário
+    cursor.execute("""
+        SELECT DISTINCT strftime('%Y-%m', data) as mes
+        FROM pontos
+        WHERE matricula = ?
+        ORDER BY mes DESC
+    """, (matricula,))
+    meses = [row[0] for row in cursor.fetchall()]
+    conn.close()
+
+    return render_template("pg_pontos_mensais.html", meses=meses)
+
+
+@app.route("/pg_pontos_mensais/<mes>")
+def pontos_mes(mes):
+    matricula = session.get("matricula")
+    if not matricula:
+        return redirect(url_for("pg_login"))
+
+    conn = conectar()
+    cursor = conn.cursor()
+
+    # Pegar dias do mês que têm pontos
+    cursor.execute("""
+        SELECT DISTINCT strftime('%Y-%m-%d', data) as dia
+        FROM pontos
+        WHERE matricula = ? AND strftime('%Y-%m', data) = ?
+        ORDER BY dia
+    """, (matricula, mes))
+    dias = [row[0] for row in cursor.fetchall()]
+    conn.close()
+
+    return render_template("pg_pontos_dias.html", mes=mes, dias=dias)
+
+
+@app.route("/pg_pontos_mensais/<mes>/<dia>")
+def pontos_dia(mes, dia):
+    matricula = session.get("matricula")
+    if not matricula:
+        return redirect(url_for("pg_login"))
+
+    conn = conectar()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT hora, tipo
+        FROM pontos
+        WHERE matricula = ? AND data = ?
+        ORDER BY id
+    """, (matricula, dia))
+    pontos = cursor.fetchall()
+    conn.close()
+
+    return render_template("pg_pontos_dia.html", dia=dia, pontos=pontos)
+
+
+
 @app.route("/pg_lembrete", methods=["GET", "POST"])
 def pg_lembrete():
     if request.method == "POST":
