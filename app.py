@@ -285,17 +285,25 @@ def pg_lembrete():
         if nome and data and hora:
             conn = sqlite3.connect("banco.db")
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO lembretes (name, data, hora) VALUES (?, ?, ?)", (nome, data, hora))
+            cursor.execute(
+                "INSERT INTO lembretes (name, data, hora) VALUES (?, ?, ?)",
+                (nome, data, hora)
+            )
             conn.commit()
             conn.close()
-            return redirect(url_for("pg_lembrete"))
 
-    # Recupera lembretes do banco para JS
+            flash("✅ Seu lembrete foi salvo com sucesso!")
+            return redirect(url_for("pg_lembrete"))
+        else:
+            flash("⚠️ Preencha todos os campos antes de salvar.")
+
+    # Recupera lembretes do banco
     conn = sqlite3.connect("banco.db")
     cursor = conn.cursor()
     cursor.execute("SELECT name, data, hora FROM lembretes")
     lembretes = cursor.fetchall()
     conn.close()
+
     return render_template("pg_lembrete.html", lembretes=lembretes)
 
 @app.route("/pg_justificativa", methods=["GET", "POST"])

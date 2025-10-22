@@ -21,6 +21,16 @@
   <h1 >Calendário de Lembretes</h1>
   <p>Selecione um dia para adicionar um lembrete de bater o ponto.</p>
 
+<!-- Mensagem de confirmação com efeito -->
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div id="mensagem-sucesso">
+      {% for message in messages %}
+        <p>{{ message }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
 
   <form action="{{ url_for('pg_lembrete') }}" method="POST">
     <div>
