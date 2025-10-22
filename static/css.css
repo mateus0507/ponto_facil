@@ -232,9 +232,6 @@ h1 {
     font-weight: bold;
     color: #333;
     margin-inline: initial;
-    #hora {
-    margin-left: 20px; /* afasta o campo de horário */
-  }
  
   }
  
@@ -257,6 +254,16 @@ h1 {
   textarea:focus {
     border-color: #1a3c6e;
     box-shadow: 0 0 5px rgba(26, 60, 110, 0.3);
+  }
+  #hora{
+    border-radius: 8px;
+    margin-inline: initial;
+    border: 1px solid #ccc;
+  }
+  #motivo{
+    border-radius: 8px;
+    margin-inline: initial;
+    border: 1px solid #ccc;
   }
  
   /* Botões */
