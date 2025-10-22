@@ -22,12 +22,12 @@
     <h2 class="ponto-title">Dias com registros em {{ mes }}:</h2>
     <ul class="ponto-list">
         {% for dia in dias %}
-            <li><a href="{{ url_for('pontos_dia', mes=mes, dia=dia) }}">{{ dia }}</a></li>
+            <li><a class="link_fdd" href="{{ url_for('pontos_dia', mes=mes, dia=dia) }}">{{ dia }}</a></li>
         {% else %}
             <li class="empty">Nenhum ponto registrado neste mês.</li>
         {% endfor %}
     </ul>
-    <a href="{{ url_for('pg_pontos_mensais') }}" class="btn-voltar">Voltar aos meses</a>
+    <a href="{{ url_for('pg_pontos_mensais') }}" class="btn-pontos_mensais">Voltar aos meses</a>
 </div>
 </main>
 </body>

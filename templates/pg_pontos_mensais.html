@@ -22,12 +22,14 @@
     <h2 class="ponto-title">Seus meses com registros:</h2>
     <ul class="ponto-list">
         {% for mes in meses %}
-            <li><a href="{{ url_for('pontos_mes', mes=mes) }}">{{ mes }}</a></li>
+            <li><a class="link_fdd" href="{{ url_for('pontos_mes', mes=mes) }}">{{ mes }}</a></li>
         {% else %}
             <li class="empty">Nenhum ponto registrado.</li>
         {% endfor %}
     </ul>
+    <a href="{{ url_for('pg_mrc_ponto') }}" class="btn-pontos_mensais">Voltar</a>
 </div>
+    
 </main>
 </body>
 </html>
