@@ -12,8 +12,8 @@ function initializeCarousel() {
 
     if (totalSlides > 0) {
         showSlide(0);
-        // Auto-play a cada 5 segundos (opcional - remova se não quiser)
-        setInterval(autoPlay, 5000);
+        // Auto-play a cada 6 segundos (opcional - remova se não quiser)
+        setInterval(autoPlay, 6000);
     }
 }
 
