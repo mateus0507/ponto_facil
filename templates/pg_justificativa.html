@@ -18,8 +18,10 @@
         <a class="link" href="{{ url_for('pg_dados_pessoais') }}"><img class="icon" src="{{ url_for('static', filename='images/usuario.png') }}" alt="">Dados Pessoais</a>
         <a class="link" href="{{ url_for('pg_suporte') }}"><img class="icon" src="{{ url_for('static', filename='images/suporte.png') }}" alt="">Suporte</a>
     </header>
+    <br>
+    <br>
     <h1>Justificativa</h1>
-    <p>Quando esquecer de bater ponto lembre-se de se justificar</p>
+    <p>Quando esquecer de bater ponto <br>lembre-se de se justificar</p>
        
     <!-- Mensagem do Flask -->
     {% with messages = get_flashed_messages() %}
