@@ -209,7 +209,7 @@ h1 {
  
   p {
     color: #ffffff;
-    font-size: 16px;
+    font-size: 23px;
     margin-bottom: 20px;
     margin-top: 20px;
   }
@@ -1311,3 +1311,124 @@ body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
     90% { opacity: 1; transform: translateY(0); }
     100% { opacity: 0; transform: translateY(-10px); }
   }
+
+  /* Container principal */
+.boxAI_wrap {
+  width: 400px;
+  background-color: #f1f1f1;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  overflow: hidden;
+}
+
+/* Cabeçalho */
+.botia_top {
+  background-color: #00bfa5;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* Área de mensagens */
+.botia_chat {
+  height: 400px;
+  overflow-y: auto;
+  padding: 10px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Mensagens */
+.msg_unit {
+  max-width: 80%;
+  padding: 10px;
+  border-radius: 10px;
+  line-height: 1.4;
+}
+
+.botia_resp {
+  background-color: #e0f7fa;
+  align-self: flex-start;
+}
+
+.botia_user {
+  background-color: #c8e6c9;
+  align-self: flex-end;
+}
+
+/* Opções */
+.areaAI_opt {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.opt_btnAI {
+  background-color: #00bfa5;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.opt_btnAI:hover {
+  background-color: #00897b;
+}
+
+/* Botões de saída */
+.ai_exit_btns {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.btn_voltarAI {
+  background-color: #ffa000;
+  color: white;
+  border: none;
+  padding: 7px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn_sairAI {
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  padding: 7px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn_voltarAI:hover { background-color: #ffb300; }
+.btn_sairAI:hover { background-color: #b71c1c; }
+
+/* Rodapé */
+.botia_footer {
+  padding: 10px;
+  background-color: #f1f1f1;
+  text-align: right;
+}
+
+#limparAI {
+  background-color: #555;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#limparAI:hover {
+  background-color: #333;
+}
