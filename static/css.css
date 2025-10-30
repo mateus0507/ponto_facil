@@ -104,6 +104,9 @@ h1 {
     padding: 0;
     box-sizing: border-box;
 }
+h2 {
+  font-size: 0.95rem;
+}
 
 
 
@@ -346,10 +349,10 @@ div {
 @media (max-width: 768px) {
   header {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     gap: 1px;
-    padding: 10px;
+    padding: 0px;
     border-radius: 0px;
     width: 80%;
     max-width: 600px;
@@ -374,13 +377,38 @@ div {
     font-size: 1rem;
     padding: 12px;
   }
+  a{
+  width: 200px;
+  margin-right: 50px;
+  }
+
+
+  h2{
+  color: black;
+  font-size: 0.95rem;
+  }
+  h1{
+  margin-left: 7%;
+  color: white;
+  }
+  .logo{
+  align-items: center;
+  }
+ .link{
+  width: 200px;
+  margin-right: 50px;
+
+ }
+ .carousel-indicators{
+  display: none;
+ }
 }
 
 /* Celulares (até 480px) */
 @media (max-width: 480px) {
   header {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     gap: 1px;
     padding: 10px;
@@ -388,10 +416,13 @@ div {
     width: 80%;
     max-width: 600px;
     gap: 10px;
+    margin-left: 175px;
     
-}
+  }
+
   .h1 {
     font-size: 1.5rem;
+    
   }
 
   p {
@@ -413,7 +444,34 @@ div {
     font-size: 0.95rem;
     padding: 10px;
   }
+  a{
+  width: 200px;
+  margin-right: 50px;
+  }
+
+
+  h2{
+  color: black;
+  font-size: 0.95rem;
+  }
+  h1{
+  margin-left: 7%;
+  color: white;
+  }
+  .logo{
+  align-items: center;
+  }
+ .link{
+  width: 200px;
+  margin-right: 50px;
+
+ }
+ .carousel-indicators{
+  display: none;
+ }
 }
+
+
 
 /* fim das pg lembrete/justificativa */
 
