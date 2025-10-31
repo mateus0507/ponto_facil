@@ -404,76 +404,6 @@ div {
  }
 }
 
-/* Celulares (até 480px) */
-@media (max-width: 480px) {
-  header {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 1px;
-    padding: 10px;
-    border-radius: 0px;
-    width: 80%;
-    max-width: 600px;
-    gap: 10px;
-    margin-left: 175px;
-    
-  }
-
-  .h1 {
-    font-size: 1.5rem;
-    
-  }
-
-  p {
-    font-size: 1rem;
-  }
-
-  form {
-    padding: 30px;
-    width: 95%;
-    border-radius: 20px;
-  }
-
-  input, textarea {
-    font-size: 0.9rem;
-    padding: 10px;
-  }
-
-  .button {
-    font-size: 0.95rem;
-    padding: 10px;
-  }
-  a{
-  width: 200px;
-  margin-right: 50px;
-  }
-
-
-  h2{
-  color: black;
-  font-size: 0.95rem;
-  }
-  h1{
-  margin-left: 7%;
-  color: white;
-  }
-  .logo{
-  align-items: center;
-  }
- .link{
-  width: 200px;
-  margin-right: 50px;
-
- }
- .carousel-indicators{
-  display: none;
- }
-}
-
-
-
-/* fim das pg lembrete/justificativa */
 
 
 /* inicio da pg login */
@@ -1564,4 +1494,74 @@ div {
 
 #limparAI:hover {
   background-color: #333;
+}
+
+/* Celulares (até 390px) */
+@media (min-width: 360px) and (max-width: 768px) {
+  header {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    border-radius: 0px;
+    width: 75%;
+    gap: 10px;
+    
+  }
+   header a{
+    width: 100%;
+    align-items: center;
+  }
+
+
+  .h1 {
+    font-size: 1.5rem;
+    
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  form {
+    padding: 30px;
+    width: 95%;
+    border-radius: 20px;
+  }
+
+  input, textarea {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .button {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+  a{
+  width: 200px;
+  margin-right: 50px;
+  }
+
+
+  h2{
+  color: black;
+  font-size: 0.95rem;
+  }
+  h1{
+  text-align: center;
+  color: white;
+  }
+ 
+ .link{
+  width: 200px;
+  margin-left: 50px;
+
+ }
+ .carousel-indicators{
+  display: none;
+ }
+ .gg{
+  text-align: center;
+  color: rgb(255, 0, 0);
+ }
 }
