@@ -1566,3 +1566,86 @@ div {
   color: rgb(255, 0, 0);
  }
 }
+@media (min-width: 768px) and (max-width: 1024px) {
+  
+  header {
+    display: flex;
+    flex-wrap: wrap; /* permite quebrar linha */
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 65%;
+  }
+
+  header a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 5px 0;
+    width: 200px; /* 🔹 deixa todas as âncoras do mesmo tamanho */
+  }
+
+  header a:first-of-type {
+    order: 1; /* logo */
+  }
+
+  header h1 {
+    order: 2; /* título */
+    width: 100%;
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+  header a:not(:first-of-type) {
+    order: 3; /* demais links */
+  }
+
+
+  p {
+    font-size: 1rem;
+  }
+
+  form {
+    padding: 30px;
+    width: 95%;
+    border-radius: 20px;
+  }
+
+  input, textarea {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .button {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+  a{
+  width: 200px;
+  margin-right: 50px;
+  }
+
+
+  h2{
+  color: black;
+  font-size: 0.95rem;
+  }
+  h1{
+  text-align: center;
+  color: white;
+  }
+ 
+ .link{
+  width: 200px;
+  
+
+ }
+ .carousel-indicators{
+  display: none;
+ }
+ .gg{
+  text-align: center;
+  color: rgb(255, 0, 0);
+ }
+}
