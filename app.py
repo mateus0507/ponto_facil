@@ -1,5 +1,7 @@
 from unittest import result
+from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for, flash, session
+import pytz
 import sqlite3
 import os
 from datetime import datetime, timedelta
@@ -95,7 +97,6 @@ def pg_cadastro():
 
     return render_template("pg_cadastro.html", success=success)
 
-
 @app.route("/pg_inicial")
 def pg_inicial():
     return render_template("pg_inicial.html")
@@ -122,7 +123,10 @@ def pg_mrc_ponto():
         return redirect(url_for("pg_login"))
 
     nome, jornada = usuario
-    agora = datetime.now()
+
+    
+    agora = datetime.now(pytz.timezone("America/Sao_Paulo"))
+
 
     conn = conectar()
     cursor = conn.cursor()
