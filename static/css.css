@@ -104,6 +104,9 @@ h1 {
     padding: 0;
     box-sizing: border-box;
 }
+h2 {
+  font-size: 0.95rem;
+}
 
 
 
@@ -193,155 +196,215 @@ h1 {
 
 
 
-/* inicio das pg lembrete/justificativa*/
+/* início das pg lembrete/justificativa */
 
+/* Define o estilo base e garante preenchimento total */
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #054c3e, #0a7863);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-    /* ajusta o fundo para preencher */
-  
- 
-  /* Títulos */
-  .h1 {
-    margin-top: 20px;
-    font-size: 28px;
-    color: #ffffff;
-    margin-bottom: 5px;
-  }
- 
-  p {
-    color: #ffffff;
-    font-size: 23px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-  }
- 
-  /* Formulário */
-  form {
-    background: #fff;
-    padding: 60px;
-    margin: 20px auto;
-    width: 350px;
-    border-radius: 50px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    
-  }
- 
-  label {
-    font-weight: bold;
-    color: #333;
-    margin-inline: initial;
- 
-  }
- 
-  input[type="text"],
-  input[type="date"],
-  textarea {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 14px;
-    outline: none;
-    margin-inline: initial;
-    
-  }
- 
-  input:focus,
-  textarea:focus {
-    border-color: #1a3c6e;
-    box-shadow: 0 0 5px rgba(26, 60, 110, 0.3);
-  }
-  #hora{
-    border-radius: 8px;
-    margin-inline: initial;
-    border: 1px solid #ccc;
-  }
-  #motivo{
-    border-radius: 8px;
-    margin-inline: initial;
-    border: 1px solid #ccc;
-  }
- 
-  /* Botões */
-  .button {
-    background-color: #054c3e;
-    color: #ffffff;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    width: 100%;
-    transition: background 0.3s ease;
-  }
- 
-  button:hover {
-    background-color: #00ffe1;
-  }
- 
-  /* Link de voltar */
-  .a {
-    display: inline-block;
-    margin-top: 15px;
-    text-decoration: none;
-    color: #ffffff;
-    font-weight: bold;
-  }
- 
+/* Títulos */
+.h1 {
+  margin-top: 20px;
+  font-size: 2rem;
+  color: #ffffff;
+  margin-bottom: 5px;
+}
 
+p {
+  color: #ffffff;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
 
-  div{
-    margin: 10px
-  }
-  /* tela de bate ponto */
-  * { box-sizing: border-box; }
+/* Formulário */
+form {
+  background: #fff;
+  padding: 50px;
+  margin: 20px auto;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
 
+label {
+  font-weight: bold;
+  color: #333;
+  margin-inline: initial;
+}
+
+input[type="text"],
+input[type="date"],
+textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #1a3c6e;
+  box-shadow: 0 0 5px rgba(26, 60, 110, 0.3);
+}
+
+#hora, #motivo {
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Botões */
+.button {
+  background-color: #054c3e;
+  color: #ffffff;
+  border: none;
+  padding: 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  width: 100%;
+  transition: background 0.3s ease;
+}
+
+.button:hover {
+  background-color: #00ffe1;
+  color: #000;
+}
+
+/* Link de voltar */
+.a {
+  display: inline-block;
+  margin-top: 15px;
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* Ajustes gerais */
+div {
+  margin: 10px;
+}
+
+/* Tela de bate ponto */
+* {
+  box-sizing: border-box;
+}
 
 .clock {
   padding: 32px 40px;
   border-radius: 24px;
   backdrop-filter: blur(8px);
-  background: rgba(255,255,255,0.06);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
   text-align: center;
-  min-width: 320px;
+  min-width: 280px;
 }
+
 .time {
   font-size: clamp(40px, 8vw, 84px);
   line-height: 1;
   letter-spacing: 2px;
   font-variant-numeric: tabular-nums;
 }
+
 .date {
   margin-top: 10px;
-  opacity: .85;
+  opacity: 0.85;
   font-size: clamp(14px, 2.6vw, 18px);
 }
+
 .tz {
   margin-top: 6px;
-  opacity: .6;
+  opacity: 0.6;
   font-size: 12px;
 }
 
-body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-  .mensagem { color: green; font-weight: bold; margin: 20px; }
-  form { margin-top: 20px; }
-  input, textarea { width: 230px; padding: 10px; margin: 10px; }
-  button {
-    background-color: blue;
-    color: white;
-    font-size: 16px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
+.mensagem {
+  color: green;
+  font-weight: bold;
+  margin: 20px;
 }
 
-/* fim das pg lembrete/justificativa*/
+/* --- Responsividade --- */
+
+/* Tablets (até 768px) */
+@media (max-width: 768px) {
+  header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1px;
+    padding: 0px;
+    border-radius: 0px;
+    width: 80%;
+    max-width: 600px;
+    gap: 10px;
+    
+}
+  .h1 {
+    font-size: 1.8rem;
+  }
+
+  p {
+    font-size: 1.1rem;
+  }
+
+  form {
+    padding: 40px;
+    border-radius: 30px;
+    width: 95%;
+  }
+
+  .button {
+    font-size: 1rem;
+    padding: 12px;
+  }
+  a{
+  width: 200px;
+  margin-right: 50px;
+  }
+
+
+  h2{
+  color: black;
+  font-size: 0.95rem;
+  }
+  h1{
+  margin-left: 7%;
+  color: white;
+  }
+  .logo{
+  align-items: center;
+  }
+ .link{
+  width: 200px;
+  margin-right: 50px;
+
+ }
+ .carousel-indicators{
+  display: none;
+ }
+}
+
+
 
 /* inicio da pg login */
 
@@ -1431,4 +1494,4 @@ body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
 
 #limparAI:hover {
   background-color: #333;
-}   
+}
